@@ -1,3 +1,8 @@
+// TODO:
+// 1. Enable mirror option
+// 2. Improve options handling
+// 3. Error handling
+
 const Vue = require('vue');
 
 const WebcamComponent = Vue.extend({
@@ -8,8 +13,7 @@ const WebcamComponent = Vue.extend({
                 width: this.width,
                 height: this.height,
                 src: this.src,
-                autoplay: this.autoplay,
-                style: this.styleObject
+                autoplay: this.autoplay
             }
         });
     },
@@ -64,14 +68,16 @@ const WebcamComponent = Vue.extend({
                 canvas.width = video.clientWidth;
                 this.canvas = canvas;
 
-                if (this.mirror) {
+                this.ctx = canvas.getContext('2d');
+
+                /*if (this.mirror) {
                     const context = canvas.getContext('2d');
                     context.translate(canvas.width, 0);
                     context.scale(-1, 1);
                     this.ctx = context;
                 } else {
                     this.ctx = canvas.getContext('2d');
-                }
+                }*/
             }
 
             const { ctx, canvas } = this;

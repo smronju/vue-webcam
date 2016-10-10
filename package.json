@@ -1,6 +1,6 @@
 {
     "name": "vue-webcam",
-    "version": "2.0.2",
+    "version": "2.0.4",
     "description": "A Vue component for capturing image from webcam.",
     "main": "VueWebcam.js",
     "keywords": [

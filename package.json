@@ -1,0 +1,26 @@
+{
+    "name": "vue-webcam",
+    "version": "1.0.0",
+    "description": "A Vue component for capturing image from webcam.",
+    "main": "VueWebcam.js",
+    "keywords": [
+        "vue",
+        "vuejs",
+        "webcam",
+        "stream",
+        "component"
+    ],
+    "author": {
+        "name": "Mohammad Shoriful Islam Ronju",
+        "email": "smronju@gmail.com",
+        "url": "https://github.com/smronju"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/smronju/vue-webcam"
+    },
+    "license": "MIT",
+    "peerDependencies": {
+        "vue": "^1.0.26"
+    }
+}

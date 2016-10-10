@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <vue-webcam v-ref:webcam></vue-webcam>
+        <vue-webcam ref='webcam'></vue-webcam>
         <hr/>
         <img :src="photo" alt="" style="width:400px;height:300px" />
         <hr/>
@@ -12,6 +12,7 @@
 import VueWebcam from 'vue-webcam';
 
 export default {
+    name: 'App',
     components: { VueWebcam },
     data () {
         return {

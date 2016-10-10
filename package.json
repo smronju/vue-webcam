@@ -1,6 +1,6 @@
 {
     "name": "vue-webcam",
-    "version": "1.0.0",
+    "version": "2.0.2",
     "description": "A Vue component for capturing image from webcam.",
     "main": "VueWebcam.js",
     "keywords": [
@@ -21,6 +21,6 @@
     },
     "license": "MIT",
     "peerDependencies": {
-        "vue": "^1.0.26"
+        "vue": ">=2.0.0"
     }
 }

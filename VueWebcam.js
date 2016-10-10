@@ -1,6 +1,18 @@
 const Vue = require('vue');
 
 const WebcamComponent = Vue.extend({
+    render: function (h) {
+        return h('video', {
+            ref: 'video',
+            attrs: {
+                width: this.width,
+                height: this.height,
+                src: this.src,
+                autoplay: this.autoplay,
+                style: this.styleObject
+            }
+        });
+    },
     props: {
         autoplay: {
             type: Boolean,
@@ -23,16 +35,6 @@ const WebcamComponent = Vue.extend({
             default: 'image/jpeg'
         }
     },
-    template: `
-        <video
-            v-el:video
-            :width="width"
-            :height="height"
-            :src="src"
-            :autoplay="autoplay"
-            :style="styleObject"
-        ></video>
-    `,
     data () {
         return {
             video: '',
@@ -55,7 +57,7 @@ const WebcamComponent = Vue.extend({
         getCanvas () {
             if (!this.hasUserMedia) return null;
 
-            const video = this.$els.video;
+            const video = this.$refs.video;
             if (!this.ctx) {
                 const canvas = document.createElement('canvas');
                 canvas.height = video.clientHeight;
@@ -79,8 +81,8 @@ const WebcamComponent = Vue.extend({
         }
 
     },
-    ready () {
-        this.video = this.$els.video;
+    mounted: function () {
+        this.video = this.$refs.video;
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
 
         if (navigator.getUserMedia) {
@@ -93,12 +95,12 @@ const WebcamComponent = Vue.extend({
             });
         }
     },
-    beforeDestroy () {
+    beforeDestroy: function () {
         this.video.pause();
         this.src = '';
         this.stream.getTracks()[0].stop();
     },
-    destroyed () {
+    destroyed: function () {
         console.log('Destroyed');
     }
 });

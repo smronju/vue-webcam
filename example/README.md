@@ -1,4 +1,4 @@
-# vue-cropperjs-example
+# vue-webcam-example
 
 > Example project for vue-webcam component.
 

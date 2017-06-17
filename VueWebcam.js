@@ -17,6 +17,7 @@ const WebcamComponent = Vue.extend({
       }
     });
   },
+
   props: {
     autoplay: {
       type: Boolean,
@@ -39,6 +40,7 @@ const WebcamComponent = Vue.extend({
       default: 'image/jpeg'
     }
   },
+
   data () {
     return {
       video: '',
@@ -51,6 +53,7 @@ const WebcamComponent = Vue.extend({
       }
     };
   },
+
   methods: {
     getPhoto () {
       if (!this.hasUserMedia) return null;
@@ -85,8 +88,8 @@ const WebcamComponent = Vue.extend({
 
       return canvas;
     }
-
   },
+
   mounted: function () {
     this.video = this.$refs.video;
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
@@ -101,14 +104,17 @@ const WebcamComponent = Vue.extend({
       });
     }
   },
+
   beforeDestroy: function () {
     this.video.pause();
     this.src = '';
     this.stream.getTracks()[0].stop();
   },
+
   destroyed: function () {
     console.log('Destroyed');
   }
 });
+
 const VueWebcam = Vue.component('vue-webcam', WebcamComponent);
 export default VueWebcam;

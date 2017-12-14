@@ -1,6 +1,6 @@
 {
     "name": "vue-webcam",
-    "version": "2.0.4",
+    "version": "2.0.5",
     "description": "A Vue component for capturing image from webcam.",
     "main": "VueWebcam.min.js",
     "keywords": [
@@ -10,6 +10,9 @@
         "stream",
         "component"
     ],
+    "script": {
+        "build": "./node_modules/.bin/microbundle -i ./VueWebcam.js"
+    },
     "author": {
         "name": "Mohammad Shoriful Islam Ronju",
         "email": "smronju@gmail.com",
@@ -22,5 +25,8 @@
     "license": "MIT",
     "peerDependencies": {
         "vue": ">=2.0.0"
+    },
+    "devDependencies": {
+        "microbundle": "^0.2.4"
     }
 }

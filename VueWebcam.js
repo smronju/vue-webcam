@@ -108,7 +108,7 @@ const WebcamComponent = Vue.extend({
   beforeDestroy: function () {
     this.video.pause();
     this.src = '';
-    this.stream.getTracks()[0].stop();
+    this.stream && this.stream.getTracks()[0] && this.stream.getTracks()[0].stop();
   },
 
   destroyed: function () {

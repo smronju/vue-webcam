@@ -1,3 +1,5 @@
+# If you found any issues please make PR as I'm not maintaining this anymore!
+
 # vue-webcam
 A Vue component for capturing image from webcam.
 

@@ -3,7 +3,7 @@
 // 2. Improve options handling
 // 3. Error handling
 
-import Vue from 'vue';
+const Vue = require('vue').default
 
 const WebcamComponent = Vue.extend({
   render: function (h) {

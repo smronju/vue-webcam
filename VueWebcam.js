@@ -3,21 +3,9 @@
 // 2. Improve options handling
 // 3. Error handling
 
-const Vue = require('vue').default
+const Vue = require('vue').default;
 
 const WebcamComponent = Vue.extend({
-  render: function (h) {
-    return h('video', {
-      ref: 'video',
-      attrs: {
-        width: this.width,
-        height: this.height,
-        src: this.src,
-        autoplay: this.autoplay
-      }
-    });
-  },
-
   props: {
     autoplay: {
       type: Boolean,
@@ -40,8 +28,7 @@ const WebcamComponent = Vue.extend({
       default: 'image/jpeg'
     }
   },
-
-  data () {
+  data() {
     return {
       video: '',
       src: '',
@@ -54,14 +41,57 @@ const WebcamComponent = Vue.extend({
     };
   },
 
+  mounted() {
+    this.video = this.$refs.video;
+    navigator.getUserMedia =
+      navigator.getUserMedia ||
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia ||
+      navigator.msGetUserMedia ||
+      navigator.oGetUserMedia;
+
+    // new api for video and audio called navigator.mediadevices
+    // for new browsers video can directly consume MediaStream using srcObject
+    //
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then(stream => {
+          this.video = this.$refs.video; // reInitializing as it doesn't work sometime.
+          this.video.srcObject = stream;
+          this.stream = stream;
+          this.hasUserMedia = true;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } else if (navigator.getUserMedia) {
+      // if new api not there, use the old one
+      navigator.getUserMedia(
+        { video: true },
+        stream => {
+          this.video = this.$refs.video;
+          // below line won't work on new browser because of this
+          // https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL#Using_object_URLs_for_media_streams
+          // this.src = window.URL.createObjectURL(stream);
+          this.video.srcObject = stream;
+          this.stream = stream;
+          this.hasUserMedia = true;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  },
   methods: {
-    getPhoto () {
+    getPhoto() {
       if (!this.hasUserMedia) return null;
 
       const canvas = this.getCanvas();
       return canvas.toDataURL(this.screenshotFormat);
     },
-    getCanvas () {
+    getCanvas() {
       if (!this.hasUserMedia) return null;
 
       const video = this.$refs.video;
@@ -73,7 +103,7 @@ const WebcamComponent = Vue.extend({
 
         this.ctx = canvas.getContext('2d');
 
-          /*if (this.mirror) {
+        /*if (this.mirror) {
            const context = canvas.getContext('2d');
            context.translate(canvas.width, 0);
            context.scale(-1, 1);
@@ -90,29 +120,27 @@ const WebcamComponent = Vue.extend({
     }
   },
 
-  mounted: function () {
-    this.video = this.$refs.video;
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
-
-    if (navigator.getUserMedia) {
-      navigator.getUserMedia({ video: true }, (stream) => {
-        this.src = window.URL.createObjectURL(stream);
-      this.stream = stream;
-      this.hasUserMedia = true;
-    }, (error) => {
-        console.log(error);
-      });
-    }
-  },
-
-  beforeDestroy: function () {
+  beforeDestroy: function() {
     this.video.pause();
     this.src = '';
-    this.stream && this.stream.getTracks()[0] && this.stream.getTracks()[0].stop();
+    this.stream &&
+      this.stream.getTracks()[0] &&
+      this.stream.getTracks()[0].stop();
   },
 
-  destroyed: function () {
+  destroyed: function() {
     console.log('Destroyed');
+  },
+  render: function(h) {
+    return h('video', {
+      ref: 'video',
+      attrs: {
+        width: this.width,
+        height: this.height,
+        src: this.src,
+        autoplay: this.autoplay
+      }
+    });
   }
 });
 

@@ -27,6 +27,6 @@
         "vue": ">=2.0.0"
     },
     "devDependencies": {
-        "microbundle": "^0.2.4"
+        "microbundle": "^0.15.1"
     }
 }
